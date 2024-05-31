@@ -42,6 +42,8 @@ nav ul li a {
 .section img.background-img {
     width: 100%;
     height: auto;
+    max-height: 500px; /* 限制最大高度 */
+    object-fit: cover; /* 保持图片比例 */
 }
 
 form {
@@ -80,8 +82,6 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: fixed;
-    bottom: 0;
     width: 100%;
 }
 
@@ -154,7 +154,7 @@ footer .social-links a {
 .modal-content img {
     max-width: 200%;
     height: auto;
-    max-height: 400px; /* Adjust this value to change the height */
+    max-height: 400px; /* 调整这个值来改变高度 */
 }
 
 /* Media Queries for Responsive Design */
@@ -178,5 +178,13 @@ footer .social-links a {
 
     nav ul li {
         margin: 10px 0;
+    }
+
+    footer {
+        padding: 20px 0;
+    }
+    
+    #guestbook-entries {
+        max-width: 100%;
     }
 }
