@@ -5,25 +5,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const modal = document.getElementById('contact-modal');
     const closeButton = document.querySelector('.close-button');
 
-    guestbookForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+    if (guestbookForm) {
+        guestbookForm.addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        const name = document.getElementById('guest-name').value;
-        const message = document.getElementById('guest-message').value;
+            const name = document.getElementById('guest-name').value;
+            const message = document.getElementById('guest-message').value;
 
-        const entry = {
-            name: name,
-            message: message,
-            timestamp: new Date().toLocaleString()
-        };
+            const entry = {
+                name: name,
+                message: message,
+                timestamp: new Date().toLocaleString()
+            };
 
-        let entries = JSON.parse(localStorage.getItem('guestbookEntries')) || [];
-        entries.push(entry);
-        localStorage.setItem('guestbookEntries', JSON.stringify(entries));
+            let entries = JSON.parse(localStorage.getItem('guestbookEntries')) || [];
+            entries.push(entry);
+            localStorage.setItem('guestbookEntries', JSON.stringify(entries));
 
-        displayEntries();
-        guestbookForm.reset();
-    });
+            displayEntries();
+            guestbookForm.reset();
+        });
+    }
 
     function displayEntries() {
         guestbookEntries.innerHTML = '';
@@ -36,15 +38,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    displayEntries();
+    if (guestbookEntries) {
+        displayEntries();
+    }
 
-    contactButton.addEventListener('click', () => {
-        modal.style.display = 'block';
-    });
+    if (contactButton) {
+        contactButton.addEventListener('click', () => {
+            modal.style.display = 'block';
+        });
+    }
 
-    closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
+    if (closeButton) {
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
 
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
