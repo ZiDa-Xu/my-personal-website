@@ -1,128 +1,40 @@
-/* 背景图片样式 */
 body {
+    margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f8ff;
-    background-image: url('background.jpg');
-    background-size: contain; /* 使背景图片适应容器 */
-    background-position: center; /* 将背景图片居中 */
-    background-repeat: no-repeat; /* 不重复背景图片 */
-}
-
-/* Media Queries for Responsive Design */
-@media (max-width: 768px) {
-    body {
-        background-size: cover; /* 在移动设备上调整背景图片大小 */
-    }
-}
-
-
-header {
-    background-color: #4682b4;
+    background: url('newback.jpg') no-repeat center center fixed;
+    background-size: cover;
     color: white;
-    padding: 20px 0;
-    text-align: center;
-}
-
-header h1 {
-    margin: 0;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-nav ul li {
-    margin: 0 15px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.section {
-    padding: 50px;
-    text-align: center;
-}
-
-.section img.background-img {
-    width: 100%;
-    height: auto;
-    max-height: 500px; /* 限制最大高度 */
-    object-fit: cover; /* 保持图片比例 */
-}
-
-form {
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
 }
 
-form label {
-    margin: 10px 0 5px;
-}
-
-form input, form textarea {
-    width: 80%;
+.header {
+    text-align: right;
     padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
 }
 
-form button {
-    padding: 10px 20px;
-    background-color: #4682b4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-form button:hover {
-    background-color: #315f86;
-}
-
-footer {
-    background-color: #4682b4;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    width: 100%;
-}
-
-footer .social-links a {
-    margin: 0 10px;
-    color: white;
+.header a {
+    margin: 0 15px;
     text-decoration: none;
+    color: white;
+    font-weight: bold;
 }
 
-#guestbook-entries {
-    margin-top: 20px;
-    text-align: left;
-    max-width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    text-align: center;
 }
 
-.guestbook-entry {
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0;
-}
-
-.guestbook-entry:last-child {
-    border-bottom: none;
+.welcome-text {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    position: relative;
+    left: 20px; /* 向右平移 */
 }
 
 .modal {
@@ -134,20 +46,23 @@ footer .social-links a {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
-    padding-top: 60px;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
     background-color: #fefefe;
-    margin: 5% auto;
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 300px;
+    max-width: 400px;
     text-align: center;
-    border-radius: 10px;
+    color: black; /* 修复文本颜色 */
+}
+
+.qrcode {
+    width: 150px; /* 调整二维码大小 */
+    height: auto;
 }
 
 .close-button {
@@ -164,54 +79,18 @@ footer .social-links a {
     cursor: pointer;
 }
 
-.modal-content img {
-    max-width: 200%;
-    height: auto;
-    max-height: 400px; /* 调整这个值来改变高度 */
-}
-/* 添加针对 .quote-img 的样式 */
-.section img.quote-img {
-    width: 100%;
-    height: auto;
-    max-height: 300px; /* 限制最大高度，调整这个值以适应手机屏幕 */
-    object-fit: cover; /* 保持图片比例 */
+footer {
+    text-align: center;
+    padding: 10px 0;
 }
 
-/* Media Queries for Responsive Design */
-@media (max-width: 768px) {
-    .section img.quote-img {
-        max-height: 200px; /* 在移动设备上调整最大高度 */
-    }
+footer p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7); /* 浅白色字体 */
 }
 
-/* Media Queries for Responsive Design */
-@media (max-width: 768px) {
-    .section {
-        padding: 20px;
-    }
-
-    form input, form textarea {
-        width: 100%;
-    }
-
-    .modal-content {
-        width: 90%;
-        padding: 10px;
-    }
-    
-    nav ul {
-        flex-direction: column;
-    }
-
-    nav ul li {
-        margin: 10px 0;
-    }
-
-    footer {
-        padding: 20px 0;
-    }
-    
-    #guestbook-entries {
-        max-width: 100%;
-    }
+.guestbook-entry {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
