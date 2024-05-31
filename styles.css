@@ -156,6 +156,20 @@ footer .social-links a {
     height: auto;
     max-height: 400px; /* 调整这个值来改变高度 */
 }
+/* 添加针对 .quote-img 的样式 */
+.section img.quote-img {
+    width: 100%;
+    height: auto;
+    max-height: 300px; /* 限制最大高度，调整这个值以适应手机屏幕 */
+    object-fit: cover; /* 保持图片比例 */
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .section img.quote-img {
+        max-height: 200px; /* 在移动设备上调整最大高度 */
+    }
+}
 
 /* Media Queries for Responsive Design */
 @media (max-width: 768px) {
