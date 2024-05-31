@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,79 +8,108 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>小许的个人网站</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">首页</a></li>
-                <li><a href="#favorites">精品收藏</a></li>
-                <li><a href="#daily-quote">每日元气</a></li>
-                <li><a href="#" id="contact-button">联系我</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section id="home" class="section">
-        <h2>⭐你好，欢迎进入小许的个人网站，今天也要开心鸭！⭐</h2>
-        <img src="background.jpg" alt="Home Background" class="background-img">
-    </section>
-
-    <section id="favorites" class="section">
-        <h2>精品收藏</h2>
-        <h3>电影</h3>
-        <ul>
-            <li>头文字D</li>
-            <li>生化危机系列</li>
-            <li>复仇者联盟系列</li>
-            <li>无间道系列</li>
-            <li>让子弹飞</li>
-            <li>功夫</li>
-        </ul>
-        <h3>歌曲</h3>
-        <ul>
-            <li>画沙（袁咏琳 / 周杰伦）</li>
-            <li>Ring Ring Ring（何晟娟）</li>
-            <li>我期待的不只是雪（张妙格）</li>
-            <li>稻香（周杰伦）</li>
-            <li>空窗（辛晓琪）</li>
-            <li>背对背拥抱（林俊杰）</li>
-            <li>猜不透（丁当）</li>
-        </ul>
-    </section>
-
-    <section id="daily-quote" class="section">
-        <h2>每日元气</h2>
-        <p>再忙碌的日子，也别忘了抬头望天</p>
-        <img src="quote.jpg" alt="Daily Quote Image" class="quote-img">
-    </section>
-
-    <section id="guestbook" class="section">
-        <h2>留言板</h2>
-        <form id="guestbook-form">
-            <label for="guest-name">姓名:</label>
-            <input type="text" id="guest-name" name="guest-name" required>
-            <label for="guest-message">留言内容:</label>
-            <textarea id="guest-message" name="guest-message" required></textarea>
-            <button type="submit">提交留言</button>
-        </form>
-        <div id="guestbook-entries"></div>
-    </section>
-
+    <div class="header">
+        <a href="index.html">首页</a>
+        <a href="tuijian.html">精品收藏</a>
+        <a href="quote.html">每日元气</a>
+        <a href="#" id="guestbook-button">留言板</a>
+        <a href="#" id="contact-button">联系我</a>
+    </div>
+    <div class="content">
+        <div class="welcome-text">
+            <h1>⭐今天也要开心鸭(●ˇ∀ˇ●)⭐</h1>
+        </div>
+    </div>
     <footer>
         <p>© 2024 小许的个人网站</p>
-        <div class="social-links">
-            <a href="#">微信</a>
-            <a href="#">微博</a>
-            <a href="#">QQ</a>
-        </div>
     </footer>
+
+    <div id="guestbook-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>留言板</h2>
+            <form id="guestbook-form">
+                <input type="text" id="guest-name" placeholder="姓名" required><br>
+                <textarea id="guest-message" placeholder="留言内容" required></textarea><br>
+                <button type="submit">提交留言</button>
+            </form>
+            <div id="guestbook-entries"></div>
+        </div>
+    </div>
 
     <div id="contact-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <img src="weixin_qrcode.jpg" alt="WeChat QR Code">
+            <img class="qrcode" src="weixin_qrcode.jpg" alt="WeChat QR Code">
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const contactButton = document.getElementById('contact-button');
+            const guestbookButton = document.getElementById('guestbook-button');
+            const contactModal = document.getElementById('contact-modal');
+            const guestbookModal = document.getElementById('guestbook-modal');
+            const closeButtons = document.querySelectorAll('.close-button');
+
+            contactButton.addEventListener('click', () => {
+                contactModal.style.display = 'block';
+            });
+
+            guestbookButton.addEventListener('click', () => {
+                guestbookModal.style.display = 'block';
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.closest('.modal').style.display = 'none';
+                });
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target === contactModal) {
+                    contactModal.style.display = 'none';
+                } else if (event.target === guestbookModal) {
+                    guestbookModal.style.display = 'none';
+                }
+            });
+
+            const guestbookForm = document.getElementById('guestbook-form');
+            const guestbookEntries = document.getElementById('guestbook-entries');
+
+            guestbookForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const name = document.getElementById('guest-name').value;
+                const message = document.getElementById('guest-message').value;
+
+                const entry = {
+                    name: name,
+                    message: message,
+                    timestamp: new Date().toLocaleString()
+                };
+
+                let entries = JSON.parse(localStorage.getItem('guestbookEntries')) || [];
+                entries.push(entry);
+                localStorage.setItem('guestbookEntries', JSON.stringify(entries));
+
+                displayEntries();
+                guestbookForm.reset();
+            });
+
+            function displayEntries() {
+                guestbookEntries.innerHTML = '';
+                const entries = JSON.parse(localStorage.getItem('guestbookEntries')) || [];
+                entries.forEach((entry) => {
+                    const entryDiv = document.createElement('div');
+                    entryDiv.className = 'guestbook-entry';
+                    entryDiv.innerHTML = `<p><strong>${entry.name}</strong> (${entry.timestamp}):</p><p>${entry.message}</p>`;
+                    guestbookEntries.appendChild(entryDiv);
+                });
+            }
+
+            displayEntries();
+        });
+    </script>
 </body>
 </html>
