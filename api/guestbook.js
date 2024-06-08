@@ -1,5 +1,3 @@
-// api/guestbook.js
-
 const entries = [];
 
 export default (req, res) => {
