@@ -1,28 +1,30 @@
+// script.js
+
 document.addEventListener('DOMContentLoaded', (event) => {
+    const guestbookForm = document.getElementById('guestbook-form');
+    const guestbookEntries = document.getElementById('guestbook-entries');
     const contactButton = document.getElementById('contact-button');
     const guestbookButton = document.getElementById('guestbook-button');
     const contactModal = document.getElementById('contact-modal');
     const guestbookModal = document.getElementById('guestbook-modal');
     const closeButtons = document.querySelectorAll('.close-button');
 
-    // 处理点击 "联系我" 按钮
+    const apiUrl = '/api/guestbook'; // 指向 Vercel 的 API 端点
+
     contactButton.addEventListener('click', () => {
         contactModal.style.display = 'block';
     });
 
-    // 处理点击 "留言板" 按钮
     guestbookButton.addEventListener('click', () => {
         guestbookModal.style.display = 'block';
     });
 
-    // 处理点击关闭按钮
     closeButtons.forEach(button => {
         button.addEventListener('click', () => {
             button.closest('.modal').style.display = 'none';
         });
     });
 
-    // 处理点击模态框外部关闭模态框
     window.addEventListener('click', (event) => {
         if (event.target === contactModal) {
             contactModal.style.display = 'none';
@@ -33,9 +35,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     // 处理留言板提交
-    const guestbookForm = document.getElementById('guestbook-form');
-    const guestbookEntries = document.getElementById('guestbook-entries');
-
     guestbookForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -48,22 +47,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
             timestamp: new Date().toLocaleString()
         };
 
-        let entries = JSON.parse(localStorage.getItem('guestbookEntries')) || [];
-        entries.push(entry);
-        localStorage.setItem('guestbookEntries', JSON.stringify(entries));
-
-        displayEntries();
-        guestbookForm.reset();
+        // 将留言发送到 Vercel 后端服务
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(entry)
+        })
+        .then(response => response.json())
+        .then(data => {
+            displayEntries();
+            guestbookForm.reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 
+    // 显示留言板条目
     function displayEntries() {
         guestbookEntries.innerHTML = '';
-        const entries = JSON.parse(localStorage.getItem('guestbookEntries')) || [];
-        entries.forEach((entry) => {
-            const entryDiv = document.createElement('div');
-            entryDiv.className = 'guestbook-entry';
-            entryDiv.innerHTML = `<p><strong>${entry.name}</strong> (${entry.timestamp}):</p><p>${entry.message}</p>`;
-            guestbookEntries.appendChild(entryDiv);
+        // 从 Vercel 后端服务获取留言
+        fetch(apiUrl)
+        .then(response => response.json())
+        .then(entries => {
+            entries.forEach((entry) => {
+                const entryDiv = document.createElement('div');
+                entryDiv.className = 'guestbook-entry';
+                entryDiv.innerHTML = `<p><strong>${entry.name}</strong> (${entry.timestamp}):</p><p>${entry.message}</p>`;
+                guestbookEntries.appendChild(entryDiv);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
     }
 
