@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         };
 
         // 替换成您的后端 API URL
-        fetch('https://your-heroku-app.herokuapp.com/api/guestbook.js', {
+        fetch('https://my-personal-website-pi-three.vercel.app/api/guestbook.js', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function displayEntries() {
         guestbookEntries.innerHTML = '';
         // 替换成您的后端 API URL
-        fetch('https://document.addEventListener('DOMContentLoaded', (event) => {
+        fetch('https://my-personal-website-pi-three.vercel.app/api/guestbook.js('DOMContentLoaded', (event) => {
     const contactButton = document.getElementById('contact-button');
     const guestbookButton = document.getElementById('guestbook-button');
     const contactModal = document.getElementById('contact-modal');
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         };
 
         // 替换成您的后端 API URL
-        fetch('https://your-heroku-app.herokuapp.com/api/guestbook', {
+        fetch('https://my-personal-website-pi-three.vercel.app/api/guestbook.js', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function displayEntries() {
         guestbookEntries.innerHTML = '';
         // 替换成您的后端 API URL
-        fetch('https://my-personal-website-pi-three.vercel.app.com/api/guestbook')
+        fetch('https://my-personal-website-pi-three.vercel.app/api/guestbook.js')
         .then(response => response.json())
         .then(entries => {
             entries.forEach((entry) => {
