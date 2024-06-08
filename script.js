@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             timestamp: new Date().toLocaleString()
         };
 
-        // 替换成您的后端 API URL
+        // 使用 Vercel 部署的后端 API URL
         fetch('https://my-personal-website-pi-three.vercel.app/api/guestbook', {
             method: 'POST',
             headers: {
@@ -65,7 +65,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     function displayEntries() {
         guestbookEntries.innerHTML = '';
-        // 替换成您的后端 API URL
+
+        // 使用 Vercel 部署的后端 API URL
         fetch('https://my-personal-website-pi-three.vercel.app/api/guestbook')
         .then(response => response.json())
         .then(entries => {
