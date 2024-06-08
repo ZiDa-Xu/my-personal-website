@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小许的个人网站</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <a href="index.html">首页</a>
+        <a href="tuijian.html">精品收藏</a>
+        <a href="quote.html">每日元气</a>
+        <a href="#" id="contact-button">联系我</a>
+        <a href="#" id="guestbook-button">留言板</a>
+    </nav>
+
+    <!-- 欢迎信息 -->
+    <div class="container">
+        <h1>今天也要开心鸭(●ˇ∀ˇ●)</h1>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>© 2024 小许的个人网站</p>
+    </footer>
+
+<!-- 联系我模态框 -->
+<div id="contact-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <img src="weixin_qrcode.jpg" alt="WeChat QR Code">
+    </div>
+</div>
+
+
+
+    <!-- 留言板模态框 -->
+    <div id="guestbook-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>留言板</h2>
+            <form id="guestbook-form">
+                <input type="text" id="guest-name" placeholder="姓名" required><br>
+                <textarea id="guest-message" placeholder="留言内容" required></textarea><br>
+                <button type="submit">提交留言</button>
+            </form>
+            <div id="guestbook-entries"></div>
+        </div>
+    </div>
+
+    <!-- 脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const contactButton = document.getElementById('contact-button');
+            const guestbookButton = document.getElementById('guestbook-button');
+            const contactModal = document.getElementById('contact-modal');
+            const guestbookModal = document.getElementById('guestbook-modal');
+            const closeButtons = document.querySelectorAll('.close-button');
+
+            contactButton.addEventListener('click', () => {
+                contactModal.style.display = 'block';
+            });
+
+            guestbookButton.addEventListener('click', () => {
+                guestbookModal.style.display = 'block';
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.closest('.modal').style.display = 'none';
+                });
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target === contactModal) {
+                    contactModal.style.display = 'none';
+                }
+                if (event.target === guestbookModal) {
+                    guestbookModal.style.display = 'none';
+                }
+            });
+
+            // 处理留言板提交
+            const guestbookForm = document.getElementById('guestbook-form');
+            const guestbookEntries = document.getElementById('guestbook-entries');
+
+            // 从服务器获取留言
+            async function fetchEntries() {
+                const response = await fetch('http://localhost:3000/entries');
+                const entries = await response.json();
+                return entries;
+            }
+
+            async function displayEntries() {
+                guestbookEntries.innerHTML = '';
+                const entries = await fetchEntries();
+                entries.forEach((entry) => {
+                    const entryDiv = document.createElement('div');
+                    entryDiv.className = 'guestbook-entry';
+                    entryDiv.innerHTML = `<p><strong>${entry.name}</strong> (${entry.timestamp}):</p><p>${entry.message}</p>`;
+                    guestbookEntries.appendChild(entryDiv);
+                });
+            }
+
+            guestbookForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const name = document.getElementById('guest-name').value;
+                const message = document.getElementById('guest-message').value;
+
+                const entry = {
+                    name: name,
+                    message: message,
+                    timestamp: new Date().toLocaleString()
+                };
+
+                // 发送留言到服务器
+                await fetch('http://localhost:3000/entries', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(entry)
+                });
+
+                displayEntries();
+                guestbookForm.reset();
+            });
+
+            displayEntries();
+        });
+    </script>
+</body>
+</html>
