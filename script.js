@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         };
 
         // 替换成您的后端 API URL
-        fetch('https://your-heroku-app.herokuapp.com/api/guestbook', {
+        fetch('https://your-heroku-app.herokuapp.com/api/guestbook.js', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
